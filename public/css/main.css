@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web&display=swap');
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Titillium Web', sans-serif;
+}
+.main-container {
+    margin: 5rem auto 0;
+    padding: 0;
+    width: 80%
+}
+.form-element {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: #444444;
+}
+.form-element input {
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    padding: 0.5rem;
+    margin-top: 5px;
+}
+.btn {
+    padding: 0.5rem 0.75rem;
+    margin: 0 0.5rem;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease-in-out;
+}
+.btn:hover {
+    background-color: #f6f6f6;
+    border-color: #d6d6d6;
+}
+.btn-primary {
+    background-color: #0070d2;
+    border: 1px solid #0070d2;
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #005fb2;
+    border: 1px solid #005fb2;
+}
+.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0 4rem;
+    background-color: #f7f8fa;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    border-bottom: 2px solid #d6d6d6;
+    box-shadow: 0 5px 10px #efefef;
+}
+.nav-logo {
+    display: flex;
+    align-items: center;
+}
+.nav-logo h2 {
+    margin: 0;
+    color: #29303b;
+}
+.navbar ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.navbar li {
+    margin: 0 0.5rem;
+}
+.navbar a {
+    text-decoration: none;
+    color: #3d4756;
+    font-weight: 600;
+    padding: 1rem;
+    display: block;
+}
+.navbar a.active {
+    color: #29303b;
+    border-bottom: 4px solid #29303b;
+    background-color: #f0f0f0;
+}
+.navbar button {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1em;
+    padding: 0;
+    cursor: pointer;
+}
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+}
+.item-card {
+    border: 1px solid #efefef;
+    border-radius: 3px;
+    height: 23rem;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.15s ease-in-out;
+}
+.item-card:hover {
+    box-shadow: 0 3px 10px #dddddd;
+}
+.card-header {
+    padding: 0.75rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+.card-header span:nth-child(1) {
+    width: 11rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.card-image {
+    height: 12rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-image img {
+    max-width: 100%;
+    max-height: 100%;
+}
+.card-body {
+    margin: 0;
+    padding: 0.5rem 0.75rem 0;
+    flex: 1;
+    overflow: hidden;
+    line-height: 1.3;
+}
+.card-footer {
+    padding: 0.75rem;
+    text-align: center;
+}
+.pg-msg-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5rem 5rem 0 5rem;
+    color: darkslategray;
+}
+.pg-msg-container h1 {
+    font-size: 7em;
+    padding: 0;
+    margin: 0;
+}
+.pg-msg-container h3 {
+    font-size: 2em;
+}

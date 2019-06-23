@@ -1,0 +1,36 @@
+<%- include('includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('includes/nav.ejs') %>
+
+    <main class="main-container">
+        <%if (products.length > 0) { %>
+            <h1>My Products</h1>
+            <div class="cards-container">
+                <%for (let product of products) { %>
+                    <div class="item-card">
+                        <div class="card-header">
+                            <span><%= product.title %></span>
+                            <span>$12.99</span>
+                        </div>
+                        <div class="card-image">
+                            <img src="/images/cart1.png" alt="Item Image" />
+                        </div>
+                        <div class="card-body">
+                            This is product description.
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary">Add to Cart</button>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        <% } else { %>
+            <div class="pg-msg-container">
+                <h3>No Products Found!</h3>
+                <div>Currently there are no products in stock.</div>
+            </div>
+        <% } %>
+    </main>
+<%- include('includes/end.ejs') %>
