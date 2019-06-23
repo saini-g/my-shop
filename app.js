@@ -3,12 +3,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const errorHandler = require('./api/middleware/error-handler');
-const { adminRouter } = require('./api/routes/admin');
+const adminRouter = require('./api/routes/admin');
 const shopRouter = require('./api/routes/shop');
 
 const app = express();
 
-// app.set('view engine', 'pug');
 app.set('view engine', 'ejs');
 app.set('views', 'views');  // default is the views folder in project root directory, use this only if templates are stored in folder not named views
 
