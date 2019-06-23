@@ -11,7 +11,10 @@ const postAddProduct = (req, res, next) => {
 }
 
 const getProducts = (req, res, next) => {
-    res.render('shop', { products: Product.getAll(), docTitle: 'My Shop', path: 'shop' });
+
+    Product.getAll(products => {
+        res.render('shop', { products: products, docTitle: 'My Shop', path: 'shop' });
+    });
 }
 
 module.exports = {
