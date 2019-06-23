@@ -1,16 +1,17 @@
-const productsList = [];
+const Product = require('../models/product');
 
 const getAddProduct = (req, res, next) => {
     res.render('add-product', { docTitle: 'Add Product', path: 'add-product' });
 }
 
 const postAddProduct = (req, res, next) => {
-    productsList.push({ title: req.body.title });
+    const prod = new Product(req.body.title);
+    prod.save();
     res.redirect('/');
 }
 
 const getProducts = (req, res, next) => {
-    res.render('shop', { products: productsList, docTitle: 'My Shop', path: 'shop' });
+    res.render('shop', { products: Product.getAll(), docTitle: 'My Shop', path: 'shop' });
 }
 
 module.exports = {
