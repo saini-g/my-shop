@@ -6,22 +6,27 @@
 
     <main class="main-container">
         <%if (products.length > 0) { %>
-            <h1>My Products - isAdmin = <%= isAdmin %></h1>
+            <h1>My Products</h1>
             <div class="cards-container">
                 <%for (let product of products) { %>
                     <div class="item-card">
                         <div class="card-header">
                             <span><%= product.title %></span>
-                            <span>$12.99</span>
+                            <span>$<%= product.price %></span>
                         </div>
                         <div class="card-image">
-                            <img src="/images/cart1.png" alt="Item Image" />
+                            <img src="<%= product.imageUrl %>" alt="Item Image" />
                         </div>
                         <div class="card-body">
-                            This is product description.
+                            <%= product.description %>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary">Add to Cart</button>
+                            <%if (isAdmin) { %>
+                                <a href="/admin/edit-product" class="btn btn-primary">Edit</a>
+                                <a class="btn btn-danger">Delete</a>
+                            <% } else { %>
+                                <a class="btn btn-primary">Add to Cart</a>
+                            <% } %>
                         </div>
                     </div>
                 <% } %>

@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const dbPath = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json');
+let _pid = 1;
 
 const readProducts = (cb) => {
 
@@ -20,8 +21,13 @@ const writeProduct = (prods) => {
 
 module.exports = class Product {
 
-    constructor(t) {
-        this.title = t;
+    constructor(title, imageUrl, price, description) {
+        this._id = _pid;
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.description = description;
+        _pid += 1;
     }
 
     save() {

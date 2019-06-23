@@ -17,14 +17,22 @@ body {
     width: 100%;
     color: #444444;
 }
-.form-element input {
+.form-element input,
+.form-element textarea {
     border: 1px solid lightgray;
     border-radius: 4px;
     padding: 0.5rem;
     margin-top: 5px;
 }
-.btn {
+a.btn {
+    padding: 0.25rem 0.75rem;
+    text-decoration: none;
+}
+button.btn {
     padding: 0.5rem 0.75rem;
+    font-size: 0.9em;
+}
+.btn {
     margin: 0 0.5rem;
     background-color: white;
     border: 1px solid lightgray;
@@ -45,6 +53,15 @@ body {
 .btn-primary:hover {
     background-color: #005fb2;
     border: 1px solid #005fb2;
+}
+.btn-danger {
+    background-color: #c23934;
+    border: 1px solid #c23934;
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #a61a14;
+    border: 1px solid #a61a14;
 }
 .nav-header {
     position: fixed;
@@ -145,7 +162,9 @@ body {
 }
 .card-footer {
     padding: 0.75rem;
-    text-align: center;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
 }
 .pg-msg-container {
     display: flex;
