@@ -75,12 +75,13 @@ body {
     height: 100%;
 }
 .navbar li {
-    margin: 0 0.5rem;
+    margin-left: 0.5rem;
 }
 .navbar a {
     text-decoration: none;
     color: #3d4756;
     font-weight: 600;
+    font-size: 0.8rem;
     padding: 1rem;
     display: block;
 }

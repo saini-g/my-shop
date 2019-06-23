@@ -1,7 +1,7 @@
 const Product = require('../models/product');
 
 const getAddProduct = (req, res, next) => {
-    res.render('add-product', { docTitle: 'Add Product', path: 'add-product' });
+    res.render('admin/add-product', { docTitle: 'Add Product', path: 'add-product' });
 }
 
 const postAddProduct = (req, res, next) => {
@@ -10,15 +10,44 @@ const postAddProduct = (req, res, next) => {
     res.redirect('/');
 }
 
+const getEditProduct = (req, res, next) => {
+    res.render('admin/edit-product', { docTitle: 'Edit Product', path: 'edit-product' });
+}
+
+const postEditProduct = (req, res, next) => {
+    console.log('new title:', req.body.title);
+    res.redirect('/');
+}
+
 const getProducts = (req, res, next) => {
 
     Product.getAll(products => {
-        res.render('shop', { products: products, docTitle: 'My Shop', path: 'shop' });
+        res.render('shop/products', {
+            products: products,
+            docTitle: 'Products',
+            path: 'customer/products',
+            isAdmin: false
+        });
+    });
+}
+
+const getAdminProducts = (req, res, next) => {
+
+    Product.getAll(products => {
+        res.render('shop/products', {
+            products: products,
+            docTitle: 'Products',
+            path: 'admin/products',
+            isAdmin: true
+        });
     });
 }
 
 module.exports = {
     getAddProduct,
     postAddProduct,
-    getProducts
+    getProducts,
+    getEditProduct,
+    postEditProduct,
+    getAdminProducts
 };
