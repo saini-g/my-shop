@@ -8,10 +8,10 @@
                 <a class="<%= path === 'home' ? 'active' : '' %>" href="/">Home</a>
             </li>
             <li>
-                <a class="<%= path === 'customer/products' ? 'active' : '' %>" href="/products">Products</a>
+                <a class="<%= path === 'customer/products' || path === 'product-detail' ? 'active' : '' %>" href="/products">Products</a>
             </li>
             <li>
-                <a class="<%= path === 'admin/products' || path === 'edit-product' ? 'active' : '' %>" href="/admin/products">Admin Products</a>
+                <a class="<%= path === 'admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products</a>
             </li>
             <li>
                 <a class="<%= path === 'cart' || path === 'checkout' ? 'active' : '' %>" href="/cart">Cart</a>

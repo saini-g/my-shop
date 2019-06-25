@@ -48,11 +48,23 @@ const getAdminProducts = (req, res, next) => {
     });
 }
 
+const getProductById = (req, res, next) => {
+
+    Product.findById(req.params.pid, product => {
+        res.render('shop/product-detail', {
+            product: product,
+            docTitle: `${product.title} - Details`,
+            path: 'product-detail'
+        });
+    });
+}
+
 module.exports = {
     getAddProduct,
     postAddProduct,
     getProducts,
     getEditProduct,
     postEditProduct,
-    getAdminProducts
+    getAdminProducts,
+    getProductById
 };

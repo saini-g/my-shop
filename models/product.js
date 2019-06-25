@@ -22,7 +22,7 @@ const writeProduct = (prods) => {
 module.exports = class Product {
 
     constructor(title, imageUrl, price, description) {
-        this._id = _pid;
+        this._id = _pid.toString();
         this.title = title;
         this.imageUrl = imageUrl;
         this.price = price;
@@ -40,5 +40,12 @@ module.exports = class Product {
 
     static getAll(cb) {
         readProducts(cb);
+    }
+
+    static findById(id, cb) {
+        readProducts(products => {
+            const product = products.find(p => p._id === id);
+            cb(product);
+        });
     }
 }
