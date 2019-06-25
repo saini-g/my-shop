@@ -23,7 +23,7 @@
                         </div>
                         <div class="card-footer">
                             <%if (isAdmin) { %>
-                                <a href="/admin/edit-product" class="btn btn-primary">Edit</a>
+                                <a href="/admin/edit-product/<%= product._id %>" class="btn btn-primary">Edit</a>
                                 <a class="btn btn-danger">Delete</a>
                             <% } else { %>
                                 <a href="/products/<%= product._id %>" class="btn">Details</a>

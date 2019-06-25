@@ -16,7 +16,14 @@ const postAddProduct = (req, res, next) => {
 }
 
 const getEditProduct = (req, res, next) => {
-    res.render('admin/edit-product', { docTitle: 'Edit Product', path: 'edit-product' });
+
+    Product.findById(req.params.pid, product => {
+        res.render('admin/edit-product', {
+            product: product,
+            docTitle: `${product.title} - Edit`,
+            path: 'edit-product'
+        });
+    });
 }
 
 const postEditProduct = (req, res, next) => {
