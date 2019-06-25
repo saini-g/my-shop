@@ -9,8 +9,10 @@ const readProducts = (cb) => {
     fs.readFile(dbPath, (err, content) => {
 
         if (err) {
+            _pid = 1;
             return cb([]);
         }
+        _pid = JSON.parse(content).length;
         cb(JSON.parse(content));
     });
 }

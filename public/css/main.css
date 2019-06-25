@@ -128,3 +128,39 @@ body {
 .pg-msg-container h3 {
     font-size: 2em;
 }
+.add-product-card {
+    background-color: #0070d2;
+    align-items: center;
+    position: relative;
+}
+.add-product-card div {
+    position: absolute;
+    top: 35%;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+.add-product-card h3 {
+    margin-top: 0;
+    color: #e8f1ff;
+}
+.add-product-card a {
+    display: block;
+    margin: 0 auto;
+    background: #e8f1ff;
+    border-radius: 50%;
+    line-height: 1.15;
+    text-decoration: none;
+    font-size: 3em;
+    height: 4rem;
+    width: 4rem;
+    color: #0070d2;
+    text-align: center;
+    transition: box-shadow 0.2s ease-in-out;
+}
+.add-product-card a:hover {
+    box-shadow: 0 0 10px white;
+}
+.add-product-card a:active {
+    color: #0070d2;
+}

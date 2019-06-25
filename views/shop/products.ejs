@@ -32,6 +32,14 @@
                         </div>
                     </div>
                 <% } %>
+                <%if (isAdmin) { %>
+                    <div class="item-card add-product-card">
+                        <div>
+                            <h3>Add a new product</h3>
+                            <a href="/admin/add-product">+</a>
+                        </div>
+                    </div>
+                <% } %>
             </div>
         <% } else { %>
             <div class="pg-msg-container">

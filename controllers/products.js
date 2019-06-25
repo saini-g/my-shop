@@ -12,7 +12,7 @@ const postAddProduct = (req, res, next) => {
         req.body.description
     );
     prod.save();
-    res.redirect('/');
+    res.redirect('/admin/products');
 }
 
 const getEditProduct = (req, res, next) => {
