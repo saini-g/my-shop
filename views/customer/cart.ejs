@@ -6,9 +6,34 @@
     <%- include('../includes/nav.ejs') %>
 
     <main class="main-container">
-        <div class="pg-msg-container">
-            <h3>cart page</h3>
-            <a class="btn" href="/checkout">Checkout</a>
-        </div>
+        <%if (products.length > 0) { %>
+            <div class="cart-header">
+                <h3>Your Cart</h3>
+                <a class="btn btn-primary" href="/checkout">Checkout</a>
+            </div>
+            <ul class="list-container">
+                <%for (let product of products) { %>
+                    <li class="list-item">
+                        <div>
+                            <h4><%= product.title %></h4>
+                            <span>Price: <%= product.price %>, Quantity: <%= product.qty %></span>
+                        </div>
+                        <form action="/cart/remove-product" method="post">
+                            <input type="hidden" name="productId" value="<%= product._id %>" />
+                            <button class="btn">Remove</button>
+                        </form>
+                    </li>
+                <% } %>
+            </ul>
+            <div class="cart-footer">
+                <h4>Total Price</h4>
+                <h4>$<%= totalPrice %></h4>
+            </div>
+        <% } else { %>
+            <div class="pg-msg-container">
+                <h3>Cart Empty!</h3>
+                <div>Currently there are no products in your cart.</div>
+            </div>
+        <% } %>
     </main>
 <%- include('../includes/end.ejs') %>

@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const errorHandler = require('./api/middleware/error-handler');
 const adminRouter = require('./api/routes/admin');
 const shopRouter = require('./api/routes/shop');
+const cartRouter = require('./api/routes/cart');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/admin', adminRouter);
 app.use(shopRouter);
+app.use(cartRouter);
 
 app.use(errorHandler.notFound);
 

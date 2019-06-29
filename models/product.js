@@ -16,8 +16,11 @@ const readProducts = (cb) => {
     });
 }
 
-const writeProduct = (prods) => {
-    fs.writeFile(dbPath, JSON.stringify(prods), err => console.log('error saving to file', err));
+const writeProduct = (prods, cb) => {
+
+    fs.writeFile(dbPath, JSON.stringify(prods), err => {
+        cb(err);
+    });
 }
 
 module.exports = class Product {
@@ -41,15 +44,18 @@ module.exports = class Product {
                 this._id = Math.random().toString();
                 products.push(this);
             }
-            writeProduct(products);
+            writeProduct(products, err => console.log(err));
         });
     }
 
-    static delete(id) {
+    static delete(id, cb) {
 
         readProducts(products => {
             const updatedProducts = products.filter(p => p._id !== id);
-            writeProduct(updatedProducts);
+
+            writeProduct(updatedProducts, err => {
+                cb(err);
+            });
         });
     }
 

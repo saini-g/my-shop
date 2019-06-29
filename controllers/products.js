@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const Cart = require('../models/cart');
 
 const getAddProduct = (req, res, next) => {
     res.render('admin/add-product', { docTitle: 'Add Product', path: 'add-product', isEdit: false });
@@ -76,8 +77,27 @@ const getProductById = (req, res, next) => {
 }
 
 const deleteProduct = (req, res, next) => {
-    Product.delete(req.body.productId)
-    res.redirect('/admin/products');
+    const prodId = req.body.productId;
+
+    Product.findById(prodId, product => {
+
+        Cart.removeProduct({ id: product._id, price: product.price }, err => {
+
+            if (err) {
+                console.log(err);
+                res.redirect('/admin/products');
+            } else {
+
+                Product.delete(prodId, error => {
+
+                    if (error) {
+                        console.log(error);
+                    }
+                    res.redirect('/admin/products');
+                });
+            }
+        });
+    });
 }
 
 module.exports = {
