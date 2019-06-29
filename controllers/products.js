@@ -6,6 +6,7 @@ const getAddProduct = (req, res, next) => {
 
 const postAddProduct = (req, res, next) => {
     const prod = new Product(
+        null,
         req.body.title,
         req.body.imageUrl,
         +req.body.price,
@@ -18,17 +19,25 @@ const postAddProduct = (req, res, next) => {
 const getEditProduct = (req, res, next) => {
 
     Product.findById(req.params.pid, product => {
-        res.render('admin/edit-product', {
+        res.render('admin/add-product', {
             product: product,
             docTitle: `${product.title} - Edit`,
-            path: 'edit-product'
+            path: 'edit-product',
+            isEdit: true
         });
     });
 }
 
 const postEditProduct = (req, res, next) => {
-    console.log('new title:', req.body.title);
-    res.redirect('/');
+    const updatedProduct = new Product(
+        req.body.productId,
+        req.body.title,
+        req.body.imageUrl,
+        +req.body.price,
+        req.body.description
+    );
+    updatedProduct.save();
+    res.redirect('/admin/products');
 }
 
 const getProducts = (req, res, next) => {

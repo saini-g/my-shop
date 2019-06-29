@@ -18,25 +18,30 @@ const readProducts = (cb) => {
 }
 
 const writeProduct = (prods) => {
-    fs.writeFile(dbPath, prods, err => console.log('error saving to file', err));
+    fs.writeFile(dbPath, JSON.stringify(prods), err => console.log('error saving to file', err));
 }
 
 module.exports = class Product {
 
-    constructor(title, imageUrl, price, description) {
-        this._id = _pid.toString();
+    constructor(id, title, imageUrl, price, description) {
+        this._id = id.toString();
         this.title = title;
         this.imageUrl = imageUrl;
         this.price = price;
         this.description = description;
-        _pid += 1;
     }
 
     save() {
 
         readProducts(products => {
-            products.push(this);
-            writeProduct(JSON.stringify(products));
+
+            if (this._id) {
+                const prodIndex = products.findIndex(p => p._id === this._id);
+                products[prodIndex] = this;
+            } else {
+                products.push(this);
+            }
+            writeProduct(products);
         });
     }
 
