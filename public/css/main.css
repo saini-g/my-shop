@@ -164,3 +164,13 @@ body {
 .add-product-card a:active {
     color: #0070d2;
 }
+.details-block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.details-block img {
+    height: 15rem;
+    width: auto;
+    margin-right: 1rem;
+}

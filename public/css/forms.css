@@ -71,3 +71,9 @@ button.btn {
     background-color: #a61a14;
     border: 1px solid #a61a14;
 }
+.readonly-form-element {
+    margin-bottom: 1rem;
+}
+.readonly-form-element label {
+    color: gray;
+}

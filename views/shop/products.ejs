@@ -27,7 +27,7 @@
                                 <a class="btn btn-danger">Delete</a>
                             <% } else { %>
                                 <a href="/products/<%= product._id %>" class="btn">Details</a>
-                                <a class="btn btn-primary">Add to Cart</a>
+                                <%- include('../includes/add-to-cart.ejs', { product }) %>
                             <% } %>
                         </div>
                     </div>
