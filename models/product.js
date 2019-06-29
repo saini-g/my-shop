@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 const dbPath = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json');
-let _pid = 1;
 
 const readProducts = (cb) => {
 
@@ -24,7 +23,7 @@ const writeProduct = (prods) => {
 module.exports = class Product {
 
     constructor(id, title, imageUrl, price, description) {
-        this._id = id.toString();
+        this._id = id;
         this.title = title;
         this.imageUrl = imageUrl;
         this.price = price;
@@ -39,9 +38,18 @@ module.exports = class Product {
                 const prodIndex = products.findIndex(p => p._id === this._id);
                 products[prodIndex] = this;
             } else {
+                this._id = Math.random().toString();
                 products.push(this);
             }
             writeProduct(products);
+        });
+    }
+
+    static delete(id) {
+
+        readProducts(products => {
+            const updatedProducts = products.filter(p => p._id !== id);
+            writeProduct(updatedProducts);
         });
     }
 

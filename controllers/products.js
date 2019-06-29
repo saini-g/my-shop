@@ -1,7 +1,7 @@
 const Product = require('../models/product');
 
 const getAddProduct = (req, res, next) => {
-    res.render('admin/add-product', { docTitle: 'Add Product', path: 'add-product' });
+    res.render('admin/add-product', { docTitle: 'Add Product', path: 'add-product', isEdit: false });
 }
 
 const postAddProduct = (req, res, next) => {
@@ -75,6 +75,11 @@ const getProductById = (req, res, next) => {
     });
 }
 
+const deleteProduct = (req, res, next) => {
+    Product.delete(req.body.productId)
+    res.redirect('/admin/products');
+}
+
 module.exports = {
     getAddProduct,
     postAddProduct,
@@ -82,5 +87,6 @@ module.exports = {
     getEditProduct,
     postEditProduct,
     getAdminProducts,
-    getProductById
+    getProductById,
+    deleteProduct
 };
