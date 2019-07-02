@@ -11,12 +11,13 @@
                 <h3>Your Cart</h3>
                 <a class="btn btn-primary" href="/checkout">Checkout</a>
             </div>
+            <div class="separator"></div>
             <ul class="list-container">
                 <%for (let product of products) { %>
                     <li class="list-item">
                         <div>
                             <h4><%= product.title %></h4>
-                            <span>Price: <%= product.price %>, Quantity: <%= product.qty %></span>
+                            <span>Price: $<%= product.price %>, Quantity: <%= product.qty %></span>
                         </div>
                         <form action="/cart/remove-product" method="post">
                             <input type="hidden" name="productId" value="<%= product._id %>" />
@@ -25,7 +26,8 @@
                     </li>
                 <% } %>
             </ul>
-            <div class="cart-footer">
+            <div class="separator"></div>
+            <div class="cart-header">
                 <h4>Total Price</h4>
                 <h4>$<%= totalPrice %></h4>
             </div>

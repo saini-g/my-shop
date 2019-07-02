@@ -178,15 +178,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border-bottom: 2px solid #dddddd;
-    margin-bottom: 2rem;
-}
-.cart-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    border-top: 2px solid #dddddd;
-    margin-top: 2rem;
+    margin: 2rem;
 }
 .list-container {
     padding: 0;
@@ -216,4 +208,10 @@ body {
 }
 .list-item span {
     color: #888888;
+}
+.separator {
+    margin: 2rem 0;
+    height: 2px;
+    background: #d4d4d4;
+    background: -webkit-gradient(linear, 0 0, 100% 0, from(white), to(white), color-stop(50%, #d4d4d4));
 }

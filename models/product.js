@@ -1,72 +1,39 @@
-const fs = require('fs');
-const path = require('path');
+const mongodb = require('mongodb');
 
-const dbPath = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json');
-
-const readProducts = (cb) => {
-
-    fs.readFile(dbPath, (err, content) => {
-
-        if (err) {
-            _pid = 1;
-            return cb([]);
-        }
-        _pid = JSON.parse(content).length;
-        cb(JSON.parse(content));
-    });
-}
-
-const writeProduct = (prods, cb) => {
-
-    fs.writeFile(dbPath, JSON.stringify(prods), err => {
-        cb(err);
-    });
-}
+const { getDb } = require('../util/database');
 
 module.exports = class Product {
 
-    constructor(id, title, imageUrl, price, description) {
-        this._id = id;
+    constructor(title, imageUrl, price, description, id) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.price = price;
         this.description = description;
+        this._id = id ? new mongodb.ObjectId(id) : null;
     }
 
     save() {
+        const db = getDb();
 
-        readProducts(products => {
-
-            if (this._id) {
-                const prodIndex = products.findIndex(p => p._id === this._id);
-                products[prodIndex] = this;
-            } else {
-                this._id = Math.random().toString();
-                products.push(this);
-            }
-            writeProduct(products, err => console.log(err));
-        });
+        if (this._id) {
+            return db.collection('products').updateOne({ _id: this._id }, { $set: this });
+        } else {
+            return db.collection('products').insertOne(this);
+        }
     }
 
-    static delete(id, cb) {
-
-        readProducts(products => {
-            const updatedProducts = products.filter(p => p._id !== id);
-
-            writeProduct(updatedProducts, err => {
-                cb(err);
-            });
-        });
+    static getAll() {
+        const db = getDb();
+        return db.collection('products').find().toArray();
     }
 
-    static getAll(cb) {
-        readProducts(cb);
+    static findById(id) {
+        const db = getDb();
+        return db.collection('products').find({ _id: new mongodb.ObjectId(id) }).next();
     }
 
-    static findById(id, cb) {
-        readProducts(products => {
-            const product = products.find(p => p._id === id);
-            cb(product);
-        });
+    static delete(id) {
+        const db = getDb();
+        return db.collection('products').deleteOne({ _id: new mongodb.ObjectId(id) });
     }
 }

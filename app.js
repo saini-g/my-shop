@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const errorHandler = require('./api/middleware/error-handler');
 const adminRouter = require('./api/routes/admin');
 const shopRouter = require('./api/routes/shop');
-const cartRouter = require('./api/routes/cart');
+// const cartRouter = require('./api/routes/cart');
+const dbUtil = require('./util/database');
 
 const app = express();
 
@@ -18,8 +19,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/admin', adminRouter);
 app.use(shopRouter);
-app.use(cartRouter);
+// app.use(cartRouter);
 
 app.use(errorHandler.notFound);
 
-app.listen(4000, () => console.log('server started on port 4000!'));
+dbUtil.mongoConnection(() => {
+    app.listen(4000, () => console.log('server started on port 4000'))
+});
