@@ -1,5 +1,4 @@
 const Product = require('../models/product');
-// const Cart = require('../models/cart');
 
 const getProducts = (req, res, next) => {
 
@@ -51,7 +50,9 @@ const postAddProduct = (req, res, next) => {
         req.body.title,
         req.body.imageUrl,
         +req.body.price,
-        req.body.description
+        req.body.description,
+        null,
+        req.user._id
     );
     prod.save()
         .then(result => {

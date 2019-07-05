@@ -6,7 +6,7 @@ const dbPath = path.join(path.dirname(process.mainModule.filename), 'data', 'car
 const readCart = cb => {
 
     fs.readFile(dbPath, (err, cartContent) => {
-        let cart = { products: [], total: 0 };
+        let cart = { products: [] };
 
         if (!err) {
             cart = JSON.parse(cartContent);
@@ -34,7 +34,6 @@ module.exports = class Cart {
             } else {
                 cart.products.push({ _id: prod.id, qty: 1 });
             }
-            cart.total += prod.price;
             writeCart(cart, err => console.log(err));
         });
     }
@@ -45,7 +44,6 @@ module.exports = class Cart {
             const existingProductIndex = cart.products.findIndex(p => p._id === prod.id);
 
             if (existingProductIndex !== -1) {
-                cart.total -= prod.price * cart.products[existingProductIndex].qty;
                 cart.products = cart.products.filter(p => p._id !== prod.id);
                 writeCart(cart, cb);
             } else {
@@ -61,7 +59,7 @@ module.exports = class Cart {
             if (!cart.products || cart.products.length === 0) {
                 return cb([], 0);
             }
-            cb(cart.products, cart.total);
+            cb(cart.products);
         });
     }
 }
