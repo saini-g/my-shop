@@ -18,11 +18,11 @@
                 <%for (let product of products) { %>
                     <li class="list-item">
                         <div>
-                            <h4><%= product.title %></h4>
-                            <span>Price: $<%= product.price %>, Quantity: <%= product.qty %></span>
+                            <h4><%= product.product_id.title %></h4>
+                            <span>Price: $<%= product.product_id.price %>, Quantity: <%= product.qty %></span>
                         </div>
                         <form action="/cart/remove-product" method="POST">
-                            <input type="hidden" name="productId" value="<%= product._id %>" />
+                            <input type="hidden" name="productId" value="<%= product.product_id._id %>" />
                             <button type="submit" class="btn">Remove</button>
                         </form>
                     </li>

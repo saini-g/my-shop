@@ -19,7 +19,7 @@
                             <ul>
                                 <%for (let oi of order.products) { %>
                                     <li>
-                                        <%= oi.title %> (<%= oi.qty %>)
+                                        <%= oi.product.title %> (<%= oi.qty %>)
                                     </li>
                                 <% } %>
                             </ul>
