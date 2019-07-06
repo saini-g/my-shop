@@ -9,7 +9,7 @@
         <%if (products.length > 0) { %>
             <div class="cart-header">
                 <h3>Your Cart</h3>
-                <form action="/post-order" method="post">
+                <form action="/post-order" method="POST">
                     <button type="submit" class="btn btn-primary">Place Order</button>
                 </form>
             </div>
@@ -21,7 +21,7 @@
                             <h4><%= product.title %></h4>
                             <span>Price: $<%= product.price %>, Quantity: <%= product.qty %></span>
                         </div>
-                        <form action="/cart/remove-product" method="post">
+                        <form action="/cart/remove-product" method="POST">
                             <input type="hidden" name="productId" value="<%= product._id %>" />
                             <button type="submit" class="btn">Remove</button>
                         </form>

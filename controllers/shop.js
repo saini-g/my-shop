@@ -42,7 +42,12 @@ const removeFromCart = (req, res, next) => {
 } */
 
 const getOrders = (req, res, next) => {
-    res.render('customer/orders', { docTitle: 'My Orders', path: 'orders' });
+    req.user.getOrders()
+        .then(orders => {
+            res.render('customer/orders', { docTitle: 'Orders', path: 'orders', orders });
+        })
+        .catch(err => console.log(err));
+    
 }
 
 const postOrder = (req, res, next) => {

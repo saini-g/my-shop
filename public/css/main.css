@@ -192,7 +192,7 @@ body {
     padding: 0.5rem 2rem;
     margin-top: 0.75rem;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -206,8 +206,10 @@ body {
 .list-item h4 {
     margin: 0 0 0.5rem 0;
 }
-.list-item span {
+.list-item span,
+.list-item ul {
     color: #888888;
+    list-style: none;
 }
 .separator {
     margin: 2rem 0;

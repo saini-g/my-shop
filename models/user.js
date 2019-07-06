@@ -77,6 +77,11 @@ module.exports = class User {
             });
     }
 
+    getOrders() {
+        const db = getDb();
+        return db.collection('orders').find({ 'user._id': new mongodb.ObjectId(this._id) }).toArray();
+    }
+
     static findById(id) {
         const db = getDb();
         return db.collection('users').find({ _id: new mongodb.ObjectId(id) }).next();
