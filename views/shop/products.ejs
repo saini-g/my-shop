@@ -30,7 +30,9 @@
                                 </form>
                             <% } else { %>
                                 <a href="/products/<%= product._id %>" class="btn">Details</a>
-                                <%- include('../includes/add-to-cart.ejs', { product }) %>
+                                <%if (isAuthenticated) { %>
+                                    <%- include('../includes/add-to-cart.ejs', { product }) %>
+                                <% } %>
                             <% } %>
                         </div>
                     </div>

@@ -2,7 +2,7 @@ const Product = require('../models/product');
 const Order = require('../models/order');
 
 const getHome = (req, res, next) => {
-    res.render('shop/index', { docTitle: 'My Shop', path: 'home' });
+    res.render('shop/index', { docTitle: 'My Shop', path: 'home', isAuthenticated: req.session.isLoggedIn });
 }
 
 const getCart = (req, res, next) => {
@@ -12,7 +12,8 @@ const getCart = (req, res, next) => {
             res.render('customer/cart', {
                 docTitle: 'Cart',
                 path: 'cart',
-                products: user.cart.products
+                products: user.cart.products,
+                isAuthenticated: req.session.isLoggedIn
             });
         })
         .catch(err => console.log(err));
@@ -41,7 +42,12 @@ const getOrders = (req, res, next) => {
 
     Order.find({ 'user.user_id': req.user._id })
         .then(orders => {
-            res.render('customer/orders', { docTitle: 'Orders', path: 'orders', orders });
+            res.render('customer/orders', {
+                docTitle: 'Orders',
+                path: 'orders',
+                orders,
+                isAuthenticated: req.session.isLoggedIn
+            });
         })
         .catch(err => console.log(err));
 }

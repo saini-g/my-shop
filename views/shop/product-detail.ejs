@@ -22,7 +22,9 @@
                     </div>
                 </div>
             </div>
-            <%- include('../includes/add-to-cart.ejs') %>
+            <%if (isAuthenticated) { %>
+                <%- include('../includes/add-to-cart.ejs') %>
+            <% } %>
         </div>
     </main>
 <%- include('../includes/end.ejs') %>
