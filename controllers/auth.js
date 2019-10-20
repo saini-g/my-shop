@@ -28,7 +28,29 @@ const getSignup = (req, res, next) => {
 }
 
 const postSignup = (req, res, next) => {
-    //
+    // to avoid duplication - can also use index in mongodb
+    const email = req.body.email;
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+    User.findOne({ email: email })
+        .then(userDoc => {
+
+            if (userDoc) {
+                return res.redirect('/signup');
+            }
+            const newUser = new User({
+                email: email,
+                password: password,
+                cart: { products: [] }
+            });
+            return newUser.save();
+        })
+        .then(result => {
+            res.redirect('/login');
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 
 module.exports = {
