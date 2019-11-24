@@ -23,6 +23,7 @@
                 <label for="description">Description</label>
                 <textarea id="description" name="description" rows="3"><% if (isEdit) { %><%= product.description %><% } %></textarea>
             </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
             <%if (isEdit) { %>
                 <input type="hidden" value="<%= product._id %>" name="productId" />
                 <div>

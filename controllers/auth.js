@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 const getLogin = (req, res, next) => {
-    res.render('auth/login', { docTitle: 'Login', path: 'login', isAuthenticated: false });
+    res.render('auth/login', { docTitle: 'Login', path: 'login' });
 }
 
 const postLogin = (req, res, next) => {
@@ -48,7 +48,7 @@ const postLogout = (req, res, next) => {
 }
 
 const getSignup = (req, res, next) => {
-    res.render('auth/signup', { docTitle: 'Signup', path: 'signup', isAuthenticated: false });
+    res.render('auth/signup', { docTitle: 'Signup', path: 'signup' });
 }
 
 const postSignup = (req, res, next) => {

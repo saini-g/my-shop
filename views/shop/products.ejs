@@ -25,6 +25,7 @@
                             <%if (isAdmin) { %>
                                 <a href="/admin/edit-product/<%= product._id %>" class="btn btn-primary">Edit</a>
                                 <form action="/admin/delete-product" method="POST">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                                     <input type="hidden" name="productId" value="<%= product._id %>" />
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>

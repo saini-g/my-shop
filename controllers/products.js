@@ -8,8 +8,7 @@ const getProducts = (req, res, next) => {
                 products: products,
                 docTitle: 'Products',
                 path: 'customer/products',
-                isAdmin: false,
-                isAuthenticated: req.session.isLoggedIn
+                isAdmin: false
             });
         })
         .catch(err => console.log(err));
@@ -22,8 +21,7 @@ const getProductById = (req, res, next) => {
             res.render('shop/product-detail', {
                 product: product,
                 docTitle: `${product.title} - Details`,
-                path: 'product-detail',
-                isAuthenticated: req.session.isLoggedIn
+                path: 'product-detail'
             });
         })
         .catch(err => console.log(err));
@@ -37,8 +35,7 @@ const getAdminProducts = (req, res, next) => {
                 products: products,
                 docTitle: 'Products',
                 path: 'admin/products',
-                isAdmin: true,
-                isAuthenticated: req.session.isLoggedIn
+                isAdmin: true
             });
         })
         .catch(err => console.log(err));
@@ -48,8 +45,7 @@ const getAddProduct = (req, res, next) => {
     res.render('admin/add-product', {
         docTitle: 'Add Product',
         path: 'add-product',
-        isEdit: false,
-        isAuthenticated: req.session.isLoggedIn
+        isEdit: false
     });
 }
 
@@ -76,8 +72,7 @@ const getEditProduct = (req, res, next) => {
                 product: product,
                 docTitle: `${product.title} - Edit`,
                 path: 'edit-product',
-                isEdit: true,
-                isAuthenticated: req.session.isLoggedIn
+                isEdit: true
             });
         })
         .catch(err => console.log(err));

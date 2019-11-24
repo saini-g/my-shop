@@ -2,7 +2,7 @@ const Product = require('../models/product');
 const Order = require('../models/order');
 
 const getHome = (req, res, next) => {
-    res.render('shop/index', { docTitle: 'My Shop', path: 'home', isAuthenticated: req.session.isLoggedIn });
+    res.render('shop/index', { docTitle: 'My Shop', path: 'home' });
 }
 
 const getCart = (req, res, next) => {
@@ -12,8 +12,7 @@ const getCart = (req, res, next) => {
             res.render('customer/cart', {
                 docTitle: 'Cart',
                 path: 'cart',
-                products: user.cart.products,
-                isAuthenticated: req.session.isLoggedIn
+                products: user.cart.products
             });
         })
         .catch(err => console.log(err));
@@ -45,8 +44,7 @@ const getOrders = (req, res, next) => {
             res.render('customer/orders', {
                 docTitle: 'Orders',
                 path: 'orders',
-                orders,
-                isAuthenticated: req.session.isLoggedIn
+                orders
             });
         })
         .catch(err => console.log(err));

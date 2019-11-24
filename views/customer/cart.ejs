@@ -10,6 +10,7 @@
             <div class="cart-header">
                 <h3>Your Cart</h3>
                 <form action="/post-order" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <button type="submit" class="btn btn-primary">Place Order</button>
                 </form>
             </div>
@@ -22,6 +23,7 @@
                             <span>Price: $<%= product.product_id.price %>, Quantity: <%= product.qty %></span>
                         </div>
                         <form action="/cart/remove-product" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                             <input type="hidden" name="productId" value="<%= product.product_id._id %>" />
                             <button type="submit" class="btn">Remove</button>
                         </form>

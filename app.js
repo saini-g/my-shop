@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
+const csrfProtection = require('csurf')();
 
 const errorHandler = require('./api/middleware/error-handler');
 const adminRouter = require('./api/routes/admin');
@@ -33,10 +34,8 @@ app.use(session({
     resave: false,  // session not saved on every request, instead it is saved only if something changes
     saveUninitialized: false,
     store: store
-    // cookie: {
-    //     maxAge: 20,
-    // }
 }));
+app.use(csrfProtection);
 
 app.use((req, res, next) => {
 
@@ -51,6 +50,13 @@ app.use((req, res, next) => {
     } else {
         next();
     }
+});
+
+app.use((req, res, next) => {
+    // express passes local variables into all render calls 
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    next();
 });
 
 app.use('/admin', adminRouter);
