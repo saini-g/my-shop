@@ -7,14 +7,36 @@ const getLogin = (req, res, next) => {
 }
 
 const postLogin = (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    User.findOne({ email: email })
+        .then(userDoc => {
+
+            if (!userDoc) {
+                return res.redirect('/login');
+            }
+            return bcrypt.compare(password, userDoc.password)
+                .then(isPasswordValid => {
+
+                    if (isPasswordValid) {
+                        req.session.user = userDoc;
+                        req.session.isLoggedIn = true;
+                        return req.session.save(err => {
+                            console.log(err);
+                            res.redirect('/');
+                        });
+                    }
+                    res.redirect('/login');
+                });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    
+    
     User.findById('5d1b957c1c9d440000284725')
         .then(user => {
-            req.session.user = user;
-            req.session.isLoggedIn = true;
-            req.session.save(err => {
-                console.log(err);
-                res.redirect('/');
-            });
         })
         .catch(err => console.log(err));
 }
@@ -52,9 +74,6 @@ const postSignup = (req, res, next) => {
                 .then(result => {
                     res.redirect('/login');
                 })
-                .catch(err => {
-                    console.log(err);
-                });
         })
         .catch(err => {
             console.log(err);
