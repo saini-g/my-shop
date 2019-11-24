@@ -16,7 +16,7 @@ const postLogin = (req, res, next) => {
             if (!userDoc) {
                 return res.redirect('/login');
             }
-            return bcrypt.compare(password, userDoc.password)
+            bcrypt.compare(password, userDoc.password)
                 .then(isPasswordValid => {
 
                     if (isPasswordValid) {
