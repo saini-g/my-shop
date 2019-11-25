@@ -32,12 +32,6 @@ userSchema.methods.removeFromCart = function(productId) {
     return this.save();
 }
 
-userSchema.methods.addOrder = function() {
-    const updatedCartProducts = this.cart.products.filter(cp => cp.product_id.toString() !== productId.toString());
-    this.cart = { products: updatedCartProducts };
-    return this.save();
-}
-
 userSchema.methods.clearCart = function() {
     this.cart = { products: [] };
     return this.save();

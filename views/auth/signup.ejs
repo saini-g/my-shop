@@ -6,6 +6,11 @@
     <%- include('../includes/nav.ejs') %>
 
     <main class="main-container">
+        <%if (errorMessage) { %>
+            <div class="alert alert-error">
+                <%= errorMessage %>
+            </div>
+        <% } %>
         <form class="product-form" action="/signup" method="POST">
             <div class="form-element">
                 <label for="email">Email</label>

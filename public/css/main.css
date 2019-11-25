@@ -219,3 +219,15 @@ body {
     background: #d4d4d4;
     background: -webkit-gradient(linear, 0 0, 100% 0, from(white), to(white), color-stop(50%, #d4d4d4));
 }
+.alert {
+    width: 50%;
+    margin: 2rem auto;
+    padding: 1rem;
+    text-align: center;
+    background-color: #f0f0f0;
+    border-radius: 3px;
+}
+.alert-error {
+    background-color: #c00;
+    color: white;
+}

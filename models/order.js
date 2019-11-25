@@ -8,7 +8,7 @@ const orderSchema = new Schema({
         qty: { type: Number, required: true }
     }],
     user: {
-        name: { type: String, required: true },
+        email: { type: String, required: true },
         user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true }
     }
 });

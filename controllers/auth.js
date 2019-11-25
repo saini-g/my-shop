@@ -3,7 +3,18 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 const getLogin = (req, res, next) => {
-    res.render('auth/login', { docTitle: 'Login', path: 'login' });
+    let message = req.flash('error');
+
+    if (message.length > 0) {
+        message = message[0];
+    } else {
+        message = null;
+    }
+    res.render('auth/login', {
+        docTitle: 'Login',
+        path: 'login',
+        errorMessage: message
+    });
 }
 
 const postLogin = (req, res, next) => {
@@ -14,6 +25,7 @@ const postLogin = (req, res, next) => {
         .then(userDoc => {
 
             if (!userDoc) {
+                req.flash('error', 'Invalid login credentials.');
                 return res.redirect('/login');
             }
             bcrypt.compare(password, userDoc.password)
@@ -27,18 +39,13 @@ const postLogin = (req, res, next) => {
                             res.redirect('/');
                         });
                     }
+                    req.flash('error', 'Invalid login credentials.');
                     res.redirect('/login');
                 });
         })
         .catch(err => {
             console.log(err);
         });
-    
-    
-    User.findById('5d1b957c1c9d440000284725')
-        .then(user => {
-        })
-        .catch(err => console.log(err));
 }
 
 const postLogout = (req, res, next) => {
@@ -48,18 +55,35 @@ const postLogout = (req, res, next) => {
 }
 
 const getSignup = (req, res, next) => {
-    res.render('auth/signup', { docTitle: 'Signup', path: 'signup' });
+    let message = req.flash('error');
+
+    if (message.length > 0) {
+        message = message[0];
+    } else {
+        message = null;
+    }
+    res.render('auth/signup', {
+        docTitle: 'Signup',
+        path: 'signup',
+        errorMessage: message
+    });
 }
 
 const postSignup = (req, res, next) => {
     // to avoid duplication - can also use index in mongodb
     const email = req.body.email;
     const password = req.body.password;
-    // const confirmPassword = req.body.confirmPassword;
+    const confirmPassword = req.body.confirmPassword;
+
+    if (password !== confirmPassword) {
+        req.flash('error', 'Passwords do not match.');
+        return res.redirect('/signup');
+    }
     User.findOne({ email: email })
         .then(userDoc => {
 
             if (userDoc) {
+                req.flash('error', 'User with email already exists.');
                 return res.redirect('/signup');
             }
             bcrypt.hash(password, 12)

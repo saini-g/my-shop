@@ -58,7 +58,7 @@ const postOrder = (req, res, next) => {
                 return { qty: p.qty, product: { ...p.product_id._doc } };
             });
             const newOrder = new Order({
-                user: { name: req.user.name, user_id: req.user._id },
+                user: { email: req.user.email, user_id: req.user._id },
                 products
             });
             return newOrder.save();
