@@ -5,6 +5,8 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     password: { type: String, required: true },
     email: { type: String, required: true },
+    resetToken: String,
+    resetTokenExpiration: Date,
     cart: {
         products: [{
             product_id: { type: Schema.Types.ObjectId, required: true, ref: 'Product' },

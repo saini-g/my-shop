@@ -1,14 +1,8 @@
 const bcrypt = require('bcryptjs');
-const nodemailer = require('nodemailer');
-const sendgridTransport = require('nodemailer-sendgrid-transport');
+const crypto = require('crypto');
 
 const User = require('../models/user');
-
-const transporter = nodemailer.createTransport(sendgridTransport({
-    auth: {
-        api_key: process.env.SENDGRID_API_KEY
-    }
-}));
+const transporter = require('../util/email-transporter');
 
 const getLogin = (req, res, next) => {
     let message = req.flash('error');
@@ -121,10 +115,136 @@ const postSignup = (req, res, next) => {
         });
 }
 
+const getResetLink = (req, res, next) => {
+    let message = req.flash('error');
+
+    if (message.length > 0) {
+        message = message[0];
+    } else {
+        message = null;
+    }
+    res.render('auth/reset', {
+        docTitle: 'Reset Password',
+        path: 'reset',
+        errorMessage: message
+    });
+}
+
+const postResetLink = (req, res, next) => {
+    
+    crypto.randomBytes(32, (err, buffer) => {
+
+        if (err) {
+            console.log(err);
+            return res.redirect('/reset-password');
+        }
+        const token = buffer.toString('hex');
+        User.findOne({ email: req.body.email })
+            .then(user => {
+
+                if (!user) {
+                    req.flash('error', 'No user found with the provided email.');
+                    return res.redirect('/reset-password');
+                }
+                user.resetToken = token;
+                // token valid for 15 minutes only
+                user.resetTokenExpiration = Date.now() + (15 * 60 * 1000);
+                return user.save();
+            })
+            .then(result => {
+                res.redirect('/');
+                return transporter.sendMail({
+                    to: req.body.email,
+                    from: 'node@test.gs',
+                    subject: 'Reset Password',
+                    html: `
+                        <p>A password reset link was requested for this email.</p>
+                        <p>Click <a href="http://localhost:4000/reset-password/${token}">here</a> to set a new password.</p>
+                        <p>This link is valid for 15 minutes only.</p>
+                    `
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        });
+}
+
+const getResetForm = (req, res, next) => {
+    let message = req.flash('error');
+    const token = req.params.token;
+
+    if (message.length > 0) {
+        message = message[0];
+    } else {
+        message = null;
+    }
+    User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
+        .then(user => {
+
+            if (!user) {
+                return res.render('auth/new-password', {
+                    docTitle: 'Set New Password',
+                    path: 'new-password',
+                    errorMessage: message,
+                    isLinkValid: false
+                });
+            }
+            res.render('auth/new-password', {
+                docTitle: 'Set New Password',
+                path: 'new-password',
+                errorMessage: message,
+                isLinkValid: true,
+                userId: user._id.toString(),
+                resetToken: token
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+const postResetForm = (req, res, next) => {
+    const userId = req.body.userId;
+    const newPassword = req.body.password;
+    const resetToken = req.body.resetToken;
+    let user;
+
+    User.findOne({
+        _id: userId,
+        resetToken: resetToken,
+        resetTokenExpiration: { $gt: Date.now() }
+    })
+        .then(userDoc => {
+
+            if (!userDoc) {
+                //
+            }
+            user = userDoc;
+            return bcrypt.hash(newPassword, 12);
+        })
+        .then(hashedPassword => {
+            user.password = hashedPassword;
+            user.resetToken = undefined;
+            user.resetTokenExpiration = undefined;
+            return user.save();
+        })
+        .then(saveResult => {
+            res.redirect('/login');
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
 module.exports = {
     getLogin,
     postLogin,
     postLogout,
     getSignup,
-    postSignup
+    postSignup,
+    getResetLink,
+    postResetLink,
+    getResetForm,
+    postResetForm
 };
