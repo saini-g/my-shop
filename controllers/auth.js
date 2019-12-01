@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
 const transporter = require('../util/email-transporter');
@@ -75,40 +76,32 @@ const postSignup = (req, res, next) => {
     // to avoid duplication - can also use index in mongodb
     const email = req.body.email;
     const password = req.body.password;
-    const confirmPassword = req.body.confirmPassword;
+    const validationErrors = validationResult(req);
 
-    if (password !== confirmPassword) {
-        req.flash('error', 'Passwords do not match.');
-        return res.redirect('/signup');
+    if (!validationErrors.isEmpty()) {
+        return res.status(422).render('auth/signup', {
+            docTitle: 'Signup',
+            path: 'signup',
+            errorMessage: validationErrors.array()[0].msg
+        });
     }
-    User.findOne({ email: email })
-        .then(userDoc => {
-
-            if (userDoc) {
-                req.flash('error', 'User with email already exists.');
-                return res.redirect('/signup');
-            }
-            bcrypt.hash(password, 12)
-                .then(hashedPassword => {
-                    const newUser = new User({
-                        email: email,
-                        password: hashedPassword,
-                        cart: { products: [] }
-                    });
-                    return newUser.save();
-                })
-                .then(result => {
-                    res.redirect('/login');
-                    return transporter.sendMail({
-                        to: email,
-                        from: 'node@test.gs',
-                        subject: 'Signup Succesful',
-                        html: `<h3>Signup successful for nodejs shop.</h3>`
-                    });
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+    bcrypt.hash(password, 12)
+        .then(hashedPassword => {
+            const newUser = new User({
+                email: email,
+                password: hashedPassword,
+                cart: { products: [] }
+            });
+            return newUser.save();
+        })
+        .then(result => {
+            res.redirect('/login');
+            return transporter.sendMail({
+                to: email,
+                from: 'node@test.gs',
+                subject: 'Signup Succesful',
+                html: `<h3>Signup successful for nodejs shop.</h3>`
+            });
         })
         .catch(err => {
             console.log(err);

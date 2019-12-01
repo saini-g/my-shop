@@ -16,10 +16,7 @@ const cartRouter = require('./api/routes/cart');
 const authRouter = require('./api/routes/auth');
 const User = require('./models/user');
 
-const MONGO_CONNECTION_URI
-    = 'mongodb+srv://gaurav-saini:gaurav-saini@slackedge-test-skasp.mongodb.net/my-shop';
-
-const store = new MongoStore({ uri: MONGO_CONNECTION_URI, collection: 'sessions' });
+const store = new MongoStore({ uri: process.env.MONGO_CONNECTION_URI, collection: 'sessions' });
 
 const app = express();
 
@@ -70,7 +67,7 @@ app.use(authRouter);
 
 app.use(errorHandler.notFound);
 
-mongoose.connect(MONGO_CONNECTION_URI)
+mongoose.connect(process.env.MONGO_CONNECTION_URI)
     .then(result => {
         app.listen(4000, () => console.log('server started on port 4000'))
     })

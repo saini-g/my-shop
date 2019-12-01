@@ -29,7 +29,7 @@ const getProductById = (req, res, next) => {
 
 const getAdminProducts = (req, res, next) => {
 
-    Product.find()
+    Product.find({ created_by: req.user._id })
         .then(products => {
             res.render('shop/products', {
                 products: products,
